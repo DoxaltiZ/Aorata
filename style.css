@@ -1,0 +1,124 @@
+:root {
+    --primary-color: #ff6b35;
+    --secondary-color: #004e89;
+    --accent-color: #1b9cfc;
+    --dark-bg: #0f1419;
+    --card-bg: #1a1f2e;
+    --hover-bg: #252d3d;
+    --text-color: #e8eef7;
+    --text-secondary: #a8b0c0;
+    --success-color: #00d4aa;
+    --danger-color: #ff4757;
+}
+
+* {
+    margin: 0;
+   Header Navigation */
+header {
+    background: linear-gradient(135deg, var(--card-bg), var(--card-bg));
+    border-bottom: 2px solid var(--primary-color);
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.header-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 3px;
+}
+
+.user-section {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.hero {
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+}
+
+.hero h1 {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+.highlight {
+    color: var(--primary-color
+    text-align: center;
+    padding-top: 100px;
+}
+
+.logo {
+    font-size: 5rem;
+    font-weight: 900;
+    color: var(--primary-green);
+    text-shadow: 4px 4px 0px #1a1a1a;
+    margin-bottom: 0;
+}
+
+.highlight {
+    color: var(--primary-green);
+}
+
+.btn-play {
+    background: var(--primary-green);
+    color: black;
+    padding: 20px 50px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 1.5rem;
+    transition: 0.3s;
+    border: 2px solid transparent;
+}
+
+.btn-play:hover {
+    background: transparent;
+    color: var(--primary-green);
+    border-color: var(--primary-green);
+    box-shadow: 0 0 20px var(--primary-green);
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 50px;
+    background: var(--dark-bg);
+}
+
+.feature-card {
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: 15px;
+    border-bottom: 4px solid var(--primary-green);
+    text-align: center;
+}
+
+.feature-card i {
+    font-size: 3rem;
+    color: var(--primary-green);
+    margin-bottom: 15px;
+}

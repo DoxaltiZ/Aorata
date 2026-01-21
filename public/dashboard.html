@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aorata Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --aorata-green: #2ecc71;
+            --aorata-dark: #050505;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--aorata-dark);
+            color: white;
+            min-height: 100vh;
+        }
+        .bebas { font-family: 'Bebas Neue', cursive; }
+        
+        /* Cheese Drip Header */
+        .cheese-drip {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 140px;
+            background: var(--aorata-green);
+            clip-path: polygon(0 0, 100% 0, 100% 60%, 92% 85%, 84% 55%, 75% 100%, 66% 60%, 58% 90%, 50% 55%, 42% 95%, 33% 60%, 25% 85%, 15% 55%, 8% 90%, 0 60%);
+            z-index: 10;
+            box-shadow: 0 10px 30px rgba(46, 204, 113, 0.3);
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 150;
+        }
+        header h1 { font-size: 2rem; color: black; text-transform: uppercase; letter-spacing: 2px; }
+        header nav { display: flex; gap: 1.5rem; }
+        a { color: black; text-decoration: none; font-weight: 600; transition: 0.3s; }
+        a:hover { color: rgba(0,0,0,0.7); }
+
+        .container { max-width: 1200px; margin: 200px auto 2rem; padding: 0 2rem; }
+
+        h2 { 
+            font-family: 'Bebas Neue';
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            text-decoration: underline;
+            text-decoration-color: var(--aorata-green);
+            text-underline-offset: 12px;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        .stat-card {
+            background: #0a0a0a;
+            border: 1px solid rgba(46, 204, 113, 0.1);
+            border-radius: 24px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .stat-card:hover {
+            border-color: var(--aorata-green);
+            transform: translateY(-8px);
+            box-shadow: 0 10px 30px rgba(46, 204, 113, 0.1);
+        }
+        .stat-value { font-size: 3rem; font-weight: 800; color: var(--aorata-green); }
+        .stat-label { color: #888; font-size: 0.95rem; margin-top: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        button {
+            background: var(--aorata-green);
+            color: black;
+            border: none;
+            padding: 0.8rem 1.8rem;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+        button:hover { 
+            background: #27b563;
+            transform: scale(1.05);
+        }
+        .btn-secondary { 
+            background: rgba(46, 204, 113, 0.2); 
+            color: var(--aorata-green);
+        }
+        .btn-secondary:hover { 
+            background: rgba(46, 204, 113, 0.3);
+        }
+
+        /* Servers Grid */
+        .servers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        .server-card {
+            background: #0a0a0a;
+            border: 1px solid rgba(46, 204, 113, 0.1);
+            border-radius: 24px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+        .server-card:hover {
+            border-color: var(--aorata-green);
+            transform: translateY(-8px);
+            box-shadow: 0 10px 30px rgba(46, 204, 113, 0.1);
+        }
+        .server-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        .server-name { font-size: 1.5rem; font-weight: 700; }
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 0.9rem;
+            background: rgba(46, 204, 113, 0.2);
+            color: var(--aorata-green);
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .status-badge.offline {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: currentColor;
+            animation: pulse 2s infinite;
+        }
+        .status-badge.offline .status-dot {
+            animation: none;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .server-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            padding: 1.5rem 0;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+        .info-label { color: #888; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .info-value { color: var(--aorata-green); font-weight: 700; margin-top: 0.3rem; }
+        .server-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+        .btn-small {
+            flex: 1;
+            padding: 0.7rem;
+            font-size: 0.85rem;
+            border-radius: 8px;
+        }
+        .btn-start { background: var(--aorata-green); color: black; }
+        .btn-stop { background: #ef4444; color: white; }
+        .btn-stop:hover { background: #dc2626; }
+        .btn-edit { background: rgba(46, 204, 113, 0.2); color: var(--aorata-green); }
+        .btn-delete { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+        .modal.active { display: flex; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .modal-content {
+            background: #0a0a0a;
+            padding: 2.5rem;
+            border-radius: 24px;
+            border: 1px solid rgba(46, 204, 113, 0.2);
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .modal-content h2 {
+            color: var(--aorata-green);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.6rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #ccc;
+        }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 0.9rem;
+            background: rgba(46, 204, 113, 0.05);
+            border: 1px solid rgba(46, 204, 113, 0.2);
+            border-radius: 8px;
+            color: white;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: 0.3s;
+        }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--aorata-green);
+            background: rgba(46, 204, 113, 0.1);
+        }
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .btn-confirm { background: var(--aorata-green); color: black; }
+        .btn-cancel { background: rgba(255,255,255,0.1); color: white; }
+        .btn-cancel:hover { background: rgba(255,255,255,0.15); }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: #666;
+            grid-column: 1/-1;
+        }
+        .empty-state i { font-size: 3rem; margin-bottom: 1rem; opacity: 0.3; }
+
+        /* Editor Modal */
+        .editor-tabs {
+            display: flex;
+            gap: 0;
+            border-bottom: 1px solid rgba(46, 204, 113, 0.2);
+            margin-bottom: 1rem;
+        }
+        .tab-btn {
+            flex: 1;
+            background: none;
+            padding: 1rem;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            color: #888;
+            font-weight: 600;
+            transition: 0.3s;
+            border: none;
+        }
+        .tab-btn:hover { color: var(--aorata-green); }
+        .tab-btn.active {
+            border-bottom-color: var(--aorata-green);
+            color: var(--aorata-green);
+        }
+        .tab-content { display: none; max-height: 400px; overflow-y: auto; }
+        .tab-content.active { display: block; }
+        textarea { font-family: 'Courier New', monospace; }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .servers-grid { grid-template-columns: 1fr; }
+            .stat-card { padding: 1.5rem; }
+            .server-card { padding: 1.5rem; }
+            .server-info { grid-template-columns: 1fr; }
+            h2 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="cheese-drip"></div>
+
+    <header>
+        <h1 class="bebas">AORATA</h1>
+        <nav>
+            <a href="/">Home</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>Server Dashboard</h2>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" id="statTotal">0</div>
+                <div class="stat-label">Total Servers</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="statRunning">0</div>
+                <div class="stat-label">Running</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="statPlayers">0</div>
+                <div class="stat-label">Total Players</div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <button onclick="openCreateModal()"><i class="fas fa-plus"></i> New Server</button>
+            <button class="btn-secondary" onclick="loadServers()"><i class="fas fa-sync"></i> Refresh</button>
+        </div>
+
+        <!-- Servers -->
+        <div class="servers-grid" id="serversContainer">
+            <div class="empty-state">
+                <i class="fas fa-inbox"></i>
+                <p>No servers yet. Create one to get started!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Modal -->
+    <div class="modal" id="createModal">
+        <div class="modal-content">
+            <h2>Create New Server</h2>
+            <div class="form-group">
+                <label>Server Name</label>
+                <input type="text" id="serverName" placeholder="My Awesome Server">
+            </div>
+            <div class="form-group">
+                <label>Version</label>
+                <select id="serverVersion">
+                    <option>1.20.1</option>
+                    <option>1.20</option>
+                    <option>1.19.2</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Server Type</label>
+                <select id="serverType">
+                    <option value="vanilla">Vanilla</option>
+                    <option value="paper">Paper</option>
+                    <option value="spigot">Spigot</option>
+                </select>
+            </div>
+            <div class="modal-buttons">
+                <button class="btn-confirm" onclick="createServer()">Create Server</button>
+                <button class="btn-cancel" onclick="closeCreateModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Editor Modal -->
+    <div class="modal" id="editorModal">
+        <div class="modal-content">
+            <h2 id="editorTitle">Server Editor</h2>
+            
+            <div class="editor-tabs">
+                <button class="tab-btn active" onclick="switchTab('properties')">Properties</button>
+                <button class="tab-btn" onclick="switchTab('files')">Files</button>
+                <button class="tab-btn" onclick="switchTab('console')">Console</button>
+            </div>
+
+            <div class="tab-content active" id="tab-properties">
+                <textarea id="propertiesEditor" style="width:100%; height:300px;"></textarea>
+                <button class="btn-confirm" style="margin-top:1rem; width:100%;" onclick="saveProperties()">Save</button>
+            </div>
+
+            <div class="tab-content" id="tab-files">
+                <div id="filesList"></div>
+            </div>
+
+            <div class="tab-content" id="tab-console">
+                <div id="consoleOutput" style="background:#000; border:1px solid rgba(46,204,113,0.3); border-radius:8px; padding:1rem; height:250px; overflow-y:auto; margin-bottom:1rem; font-family:monospace; font-size:0.85rem;"></div>
+                <div style="display:flex; gap:0.5rem;">
+                    <input type="text" id="commandInput" placeholder="Enter command..." style="flex:1; background: rgba(46, 204, 113, 0.05); border: 1px solid rgba(46, 204, 113, 0.2);">
+                    <button style="background:var(--aorata-green); color:black;" onclick="executeCommand()">Send</button>
+                </div>
+            </div>
+
+            <button class="btn-cancel" style="width:100%; margin-top:1rem;" onclick="closeEditor()">Close</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 AORATA HOSTING. MINECRAFT SERVER HOSTING. NOT AFFILIATED WITH MOJANG AB.</p>
+    </footer>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>

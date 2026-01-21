@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aorata | Minecraft Servers. Free. Forever.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --aorata-green: #2ecc71;
+            --aorata-dark: #050505;
+        }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--aorata-dark); color: white; margin: 0; overflow-x: hidden; }
+        .bebas { font-family: 'Bebas Neue', cursive; }
+        
+        /* Cheese Drip Header Effect */
+        .cheese-drip {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 140px;
+            background: var(--aorata-green);
+            clip-path: polygon(0 0, 100% 0, 100% 60%, 92% 85%, 84% 55%, 75% 100%, 66% 60%, 58% 90%, 50% 55%, 42% 95%, 33% 60%, 25% 85%, 15% 55%, 8% 90%, 0 60%);
+            z-index: 10;
+            box-shadow: 0 10px 30px rgba(46, 204, 113, 0.3);
+        }
+
+        #navMenu {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.98);
+            backdrop-filter: blur(15px);
+            z-index: 100;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        #navMenu.active { display: flex; animation: fadeIn 0.3s ease; }
+        
+        .page-section { display: none; padding-top: 160px; }
+        .page-section.active { display: block; animation: slideUp 0.5s ease; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        .feature-card {
+            background: #0a0a0a;
+            border: 1px solid rgba(46, 204, 113, 0.1);
+            transition: all 0.3s ease;
+        }
+        .feature-card:hover {
+            border-color: var(--aorata-green);
+            transform: translateY(-8px);
+            box-shadow: 0 10px 30px rgba(46, 204, 113, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cheese-drip"></div>
+
+    <nav class="fixed top-0 left-0 w-full p-8 flex justify-between items-center z-[150]">
+        <div class="bebas text-4xl tracking-widest text-black font-black cursor-pointer" onclick="changeSection('home')">AORATA</div>
+        <button onclick="toggleMenu()" class="w-12 h-12 flex items-center justify-center bg-black rounded-lg text-2xl text-green-500 hover:bg-green-500 hover:text-black transition shadow-lg">
+            ☰
+        </button>
+    </nav>
+
+    <div id="navMenu">
+        <button onclick="toggleMenu()" class="absolute top-8 right-8 text-5xl text-gray-500 hover:text-green-500">&times;</button>
+        <div class="flex flex-col gap-8 text-center">
+            <button onclick="changeSection('home')" class="bebas text-7xl hover:text-green-500 transition">HOME</button>
+            <button onclick="changeSection('features')" class="bebas text-7xl hover:text-green-500 transition">FEATURES</button>
+            <button onclick="window.location.href='/public/dashboard.html'" class="bebas text-7xl text-green-500 hover:scale-110 transition">DASHBOARD</button>
+        </div>
+    </div>
+
+    <section id="home" class="page-section active px-6">
+        <div class="max-w-5xl mx-auto text-center pt-10">
+            <h1 class="bebas text-8xl md:text-[12rem] leading-none mb-4 text-white">AOR<span class="text-green-500">ATA</span></h1>
+            <p class="text-gray-400 text-lg md:text-2xl max-w-2xl mx-auto mb-12">Minecraft Servers. <span class="text-green-500 font-bold">Free. Forever.</span> Your own dripped out server in seconds.</p>
+            
+            <div class="flex flex-col md:flex-row items-center justify-center gap-6">
+                <a href="/public/dashboard.html" class="w-full md:w-auto bg-green-500 hover:bg-green-400 text-black px-16 py-5 rounded-2xl font-black text-xl transition transform hover:scale-105 shadow-xl shadow-green-900/40">CREATE SERVER</a>
+                <button onclick="changeSection('features')" class="w-full md:w-auto bg-white/5 border border-white/10 hover:bg-white/10 px-16 py-5 rounded-2xl font-black text-xl transition text-center">LEARN MORE</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="page-section px-6 pb-20">
+        <div class="max-w-7xl mx-auto text-center">
+            <h2 class="bebas text-7xl mb-16 underline decoration-green-500 underline-offset-8">WHY AORATA?</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="feature-card rounded-3xl p-10 text-left">
+                    <i class="fas fa-bolt text-4xl text-green-500 mb-6"></i>
+                    <h3 class="text-2xl font-bold mb-4">Instant Setup</h3>
+                    <p class="text-gray-400">Your server is online the moment you click start. No waiting in long queues like other hosts.</p>
+                </div>
+                <div class="feature-card rounded-3xl p-10 text-left">
+                    <i class="fas fa-shield-virus text-4xl text-green-500 mb-6"></i>
+                    <h3 class="text-2xl font-bold mb-4">DDoS Protection</h3>
+                    <p class="text-gray-400">Keep your world safe. We provide enterprise-grade protection for free.</p>
+                </div>
+                <div class="feature-card rounded-3xl p-10 text-left">
+                    <i class="fas fa-folder-open text-4xl text-green-500 mb-6"></i>
+                    <h3 class="text-2xl font-bold mb-4">Full File Access</h3>
+                    <p class="text-gray-400">Upload worlds, plugins, and modpacks with our real-time console and file manager.</p>
+                </div>
+                <div class="feature-card rounded-3xl p-10 text-left">
+                    <i class="fas fa-users text-4xl text-green-500 mb-6"></i>
+                    <h3 class="text-2xl font-bold mb-4">Community Servers</h3>
+                    <p class="text-gray-400">Host unlimited servers and build the community you've always wanted.</p>
+                </div>
+                <div class="feature-card rounded-3xl p-10 text-left">
+                    <i class="fas fa-plug text-4xl text-green-500 mb-6"></i>
+                    <h3 class="text-2xl font-bold mb-4">Plugins & Mods</h3>
+                    <p class="text-gray-400">Run Spigot, Paper, Purpur, or pure Vanilla servers exactly how you want.</p>
+                </div>
+                <div class="feature-card rounded-3xl p-10 text-left">
+                    <i class="fas fa-globe text-4xl text-green-500 mb-6"></i>
+                    <h3 class="text-2xl font-bold mb-4">Global Network</h3>
+                    <p class="text-gray-400">Connect from anywhere with optimized routing and zero lag.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-12 border-t border-white/5 text-center text-gray-600 text-[10px] tracking-[0.4em] uppercase">
+        <p>© 2026 AORATA HOSTING. MINECRAFT SERVER HOSTING. NOT AFFILIATED WITH MOJANG AB.</p>
+    </footer>
+
+    <script>
+        const menu = document.getElementById('navMenu');
+
+        function toggleMenu() { menu.classList.toggle('active'); }
+
+        function changeSection(id) {
+            document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            menu.classList.remove('active');
+            window.scrollTo(0,0);
+        }
+    </script>
+</body>
+</html>
